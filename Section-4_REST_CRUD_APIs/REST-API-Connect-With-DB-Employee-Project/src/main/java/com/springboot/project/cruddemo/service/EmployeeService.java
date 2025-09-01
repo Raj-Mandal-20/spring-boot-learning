@@ -6,4 +6,7 @@ public interface EmployeeService {
 
     List<Employee> findAll();
     Employee findById(int id);
+//    Employee addEmployee(Employee theEmployee);
+    void deleteById(int id);
+    Employee save(Employee theEmployee);
 }

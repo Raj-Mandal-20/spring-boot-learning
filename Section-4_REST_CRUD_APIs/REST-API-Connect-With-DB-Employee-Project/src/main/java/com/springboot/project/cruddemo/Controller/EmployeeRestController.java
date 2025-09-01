@@ -18,17 +18,25 @@ import java.util.List;
 public class EmployeeRestController {
 
 
-
-//    private EmployeeDAO employeeDAO;
-//
-//    public EmployeeRestController(EmployeeDAO employeeDAO){
-//        this.employeeDAO = employeeDAO;
-//    }
     private EmployeeService employeeService;
 
     @Autowired
     public EmployeeRestController(EmployeeService employeeService){
         this.employeeService = employeeService;
+    }
+
+
+    @PostMapping("/employees")
+    public Employee addEmployee(@RequestBody Employee theEmployee){
+         theEmployee.setId(0);
+         System.out.println(theEmployee.getId());
+         System.out.println(theEmployee.getFirstName());
+         System.out.println(theEmployee.getLastName());
+         System.out.println(theEmployee.getEmail());
+
+         Employee employee = employeeService.save(theEmployee);
+         return employee;
+//        employeeService.addEmployee(theEmployee);
     }
 
     @GetMapping("/employees")
@@ -44,5 +52,28 @@ public class EmployeeRestController {
         return this.employeeService.findById(id);
     }
 
+    @PutMapping("/employees")
+    public Employee updateEmployee(@RequestBody Employee theEmployee){
+
+        // this is implementation when id is provided explicitly in the request body
+
+        Employee employee = employeeService.save(theEmployee);
+        return employee;
+
+        // if id is not provided in request body then
+        // implementation...
+
+    }
+
+    @DeleteMapping("/employees/{id}")
+    public void deleteEmployee(@PathVariable int id){
+
+        if(employeeService.findById(id) == null){
+            throw new EmployeeException("No Employee found With this id"+ id);
+        }
+
+       employeeService.deleteById(id);
+        throw new EmployeeException("Employee Deleted!");
+    }
 
 }

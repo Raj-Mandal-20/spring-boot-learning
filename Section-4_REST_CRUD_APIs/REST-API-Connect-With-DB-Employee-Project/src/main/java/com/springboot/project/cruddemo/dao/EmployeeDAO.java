@@ -6,4 +6,7 @@ import org.springframework.context.annotation.Bean;
 public interface EmployeeDAO {
     List<Employee>  findAll();
     Employee findById(int id);
+//    Employee addEmployee(Employee theEmployee);
+    void deleteById(int id);
+    Employee save(Employee theEmployee);
 }
